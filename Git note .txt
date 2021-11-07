@@ -1,0 +1,152 @@
+ ++++++ ++++++++++++++++++++++++++GIT NOTE +++++++++++++++++++++++++++++++++++++
+=====================================================================================
+What is Git?
+>>‘’Git’’ is a go-to-version control tool that allows developers to access all of the code and efficiently manage their source code and track file changes be it small,
+ medium, or massive application development. It remains the most widely used open-source distributed version control system (DVCS) till date and has been in use 
+ for over a decade after its initial release. Unlike other version control systems that store a project’s full version history in one place, Git gives each developer 
+ their repository locally containing the entire history of changes and the entire application. 
+
+Git is used to tracking changes in the source code hence tracks history
+Git is a distributed version control tool for source code management. It is free and open-source.
+Git creates backup automatically, as the developer has a version of the code on the local repository.
+Git allows multiple developers to work together; hence is scalable and supports collaboration.
+Git supports non-linear development because of its thousands of parallel branches.
+
+Configuring Git
+=====================
+:::::::::::Configure user information for all local repositories on your computer ::::::::
+
+$ git config --global user.name "[name]"  >>Sets the name you want to be attached to your commit transactions.
+
+$ git config --global user.email "[email address]"    >>Sets the email you want to beattached to your commit transactions.
+
+$ git config --global color.ui auto  >>Enables helpful colorization of the command line output
+
+$ git config –global alias       >>Creates a Git command shortcut
+
+$ git config –system core.editor     >>Sets the preferred text editor
+
+$ git config –global –edit    >>Open and edit the global configuration file in the text editor
+
+Setting Up Git Repositories
++===========================
+
+$ git init [project-name]   :- Creates an empty repository in the project folder with the specified name
+
+$ git clone (repo URL)      :-Downloads a project from a remote service such as Github and its entire version history 
+
+$ git clone (repo URL) (folder)  :-Clones a repository to a specific folder
+
+$ git remote -v        :-Displays a list of remote repositories with URLs
+
+$ git remote rm (remote repo name)    :-Removes a remote repository
+
+$ git fetch      :-Fetching from a repository grabs all the new remote-tracking branches and tags without merging those changes into your own branches.
+
+$ git pull        :-Retrieve the most recent changes from origin and merge
+
+Managing File Changes
+=============================
+$ git add (file name)      :-Adds file changes to staging. Snapshots the file in preparation for versioning.
+
+$ git add                  :-Adds all directory changes to staging
+
+$ git add -A               :-Adds new and modified files to staging
+
+$ git rm (file_name)        :-Removes a file and stops tracking it. Deletes the file from the working directory and stages the deletion
+
+$ git rm –cached (file_name)   :-Removes the file from version control but preserves the file locally
+
+$ git checkout <deleted file name>    :-Recovers a deleted file and prepares it for commit
+
+$ git status                :-Displays the status of modified files. Lists all new or modified files to be committed
+
+$ git diff              :-Displays all unstaged changes in the index and the current directory. Shows file differences that are not yet staged
+
+$ git diff --staged       :-Shows file differences between staging and the last file version.
+
+$ git reset [file]         :-Unstages the file, but preserve its contents
+
+$ git commit -m "[descriptive message]"       :-Records file snapshots permanently in version history
+
+$ git mv [file-original] [file-renamed]        :-Changes the file name and prepares it for commit
+
+REDO COMMITS 
+=================
+Erase mistakes: You would typically want to UNDO/REDO when you commit some changes to Git and realize that the changes need to be removed/reverted.  
+
+$ git reset [commit]    :-Undo all commits after [commit], preserving changes locally
+
+$ git reset --hard [commit]   :-Discards all history and changes back to the specified commit
+
+GROUP CHANGES: Commands for Git branching
+===============================================
+You can decide how to group the changes to create meaningful commits.
+
+$ git branch      :-Lists all local branches in the current repository
+
+$ git branch [branch-name]   :-Creates a new branch
+
+$ git checkout [branch-name]    :-Switches to the specified branch and updates the working directory
+
+$ git merge [branch]       :-Combines the specified branch’s history into your current branch
+
+$ git branch -d [branch-name]   :-Deletes the specified branch
+
+$ git fetch remote <branchname>     :-Fetches a branch from the repository
+
+$ git push –all            :-Pushes all local branches to a designated remote repository
+
+SAVE FRAGMENTS 
+=================
+The Git stash command removes changes from your index and “stashes” them away for later. It is useful if you wish to pause what you are doing and work on something
+else for a while. You cannot stash more than one set of changes at a time.
+
+$ git stash   :-Temporarily stores all modified tracked files
+
+$ git stash pop   :-Restores the most recently stashed files
+
+$ git stash list    :-Lists all stashed changesets
+
+$ git stash drop     :-Discards the most recently stashed changeset
+
+Review History
+==================
+Browse and view the version history of your project files.
+
+$ git log    :-Lists version history for the current branch
+
+$ git log --follow [file]   :-Lists version history for a file, including renames
+
+$ git diff [first-branch]...[second-branch]    :-Shows content differences and conflicts between two branches
+
+$ git show [commit]   :-Outputs metadata and content changes of the specified commit
+
+Git Glossary
+=================
+Branch  :-Branches represent specific versions of a repository that “branch out” from your main project. Branches allow you to keep track of experimental changes 
+you make to repositories and revert to older versions
+
+Commit  :-Each time you save/commit the state of your project in Git, it basically takes a picture of what all your files look like at that moment and stores a 
+reference to that snapshot. To be efficient, if the files have not changed, Git does not store the file again but has a link to the previous identical file it has
+ already stored. 
+
+Checkout :-The git checkout command switches between branches or restores working tree files. It is used to undo the effects of changes to your repository.
+
+Fetch :-The Git fetch command copies and downloads all of a branch’s files to your device. Use it to save the latest changes to your repositories. It is possible to
+ fetch multiple branches simultaneously
+
+Index  :-Whenever you add, delete or alter a file, it remains in the index until you are ready to commit the changes. It is like a staging area for Git. Use the
+ Git status command to see the contents of your index. 
+
+Repositories  :-Git repositories hold all of your project’s files including branches, tags, and commits
+
+Pull  :-Pull requests represent suggestions for changes to the master branch. The Git pull command is used to add changes to the master branch
+
+Push   :-The git push command is used to update remote branches with the latest changes you have committed
+
+Stash   :-Stashing takes the state of your working directory — that is, your modified tracked files and staged changes — and saves it on a stack of unfinished
+ changes that you can reapply at any time.
+
+Staging  :-The staging area is a simple file, generally contained in your Git directory that stores information about what will go into your next commit. 
+It's sometimes referred to as the index.

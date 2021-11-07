@@ -1,0 +1,144 @@
+Most Useful Git Branching Strategy or Git Work Flow
+===============================================================
+https://www.decodingdevops.com/git-commands-list-with-examples-pdf/
+In this blog post I will tell you how i am implementing git strategy or git workflow  in my project and this is the most used git strategy or git workflow in 
+any organisation.
+In my project we have lot of repositories in git or bit-bucket
+
+but we will work on any one of the repository
+
+every repository has master branch, dev branch and lot of feature branches
+
+our main production code will be in master branch
+
+master and dev branch has the same code
+My Git Branching Strategy Diagram
+ 
+master
+
+dev
+
+feature/a-1
+
+feature/a-2
+
+feature/a-3
+. . . .
+. . .
+. .
+.
+ 
+
+If we assigned to any task or bug fixes or modify the code
+
+the first thing We will do is cloning the repository and then we will create feature branch under dev branch
+
+You can refer here how to create feature branch in git or bitbucket
+
+We will work on our feature branch and push the changes to my remote feature branch
+
+What is Git Repository How to Create Git Repository Examples
+================================================================
+Git repository is the top-level working directory that contains everything about your project. The top level working directory probably contains many 
+sub directories, your source code, data files, etc.. one of the sub directories named .git. Git repository is used to manage our project and all our files as 
+they change over time. it is just a file location where we store all the files related to our project. in this post i will show you how to create a git repository
+with different examples.
+
+Git Clone
+===========
+Git clone is nothing but copying your git remote repository into local computer
+
+Clone a Git repository into a specific folder
+==============================================
+git clone https://github.com/decodingdevops/decodingdevops.git  /home/devops/vijay
+
+How To Clone A GIT Branch-GIT Clone Specific Branch
+=========================================================
+git clone <Cloning_URL> -b <branch_name>
+
+mkdir abcd
+cd abcd
+git init
+git remote add -t <branch_name> origin <cloning_url>
+git pull
+git checkout <branch_name>
+
+list all the local and remote branches
+==========================================
+git branch command only list the local branches in git not remote branches so to list all local and remote branches in a git we use git branch -a command
+
+#git branch -a
+
+create a branch in a git or create a local branch
+To create a branch in a git use below command.
+
+#git branch <branchname>
+
+Push git branch to remote or creating remote branch
+=====================================================
+To push the branch to remote we use below command. this command will push our branch to remote(github or bitbucket).
+
+So the same branch will be created in remote(github or bitbucket).
+
+#git push --set-upstream origin <branch_name>
+EX:-git   push    – -set-upstream   origin   devops
+#git branch -a ( to check remote all branches )
+
+How To Rename Git Remote Branchs and Local Branches
+======================================================
+Git Rename Local Branchs
+If It Is A Current Branch:
+--------------------------------
+If you want to change the current branch which you are in right now you, can use below command. This command will rename your current local branch but not remote branch.
+#git branch –m new_branch_name
+If It Is Another Branch:
+-------------------------
+if you are in one branch and if you want to change another branch you can use below command. This command will change the branch name in locally not in remote.
+#git branch -m old_branch_name new_branch_name
+
+Git Rename Remote Branch
+===============================
+Using the above commands, we have changed the branch name in local.  So now we have to change this name in the remote.
+for that, you need to follow three steps. with these three steps you can rename git remote branch.
+1>pull your changes
+2>delete the old branch in remote
+3>push your newly renamed branch and track that new branch with local
+
+Before deleting your old branch in remote make sure that you have the latest version of the code in local from the remote. Or make sure that you are in sync with 
+the remote branch for that you need to pull the changes. If you delete the old branch without pulling you may loose newly changes done by any developers. 
+So first check out to your new named branch.
+#git checkout new_branch_name
+Now pull your changes
+#git pull
+Now you have all the files
+Now you can delete the old branch from the remote.
+Delete The Old Branch In Remote:
+#git push origin :old_branch_name
+here you are deleting the old branch from the remote and no need to fear that you are deleting a branch since already you have that branch in locally with a different name. 
+just you need to push our locally renamed new branch.
+Push New Branch and Track With Remote
+#git push --set-upstream origin new_branch_name
+it will push your newly renamed branch and all your files to remote. and both remote and local will be in track. now we have completed the git remote branch
+now we have successfully renamed the git branch locally and remotely.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

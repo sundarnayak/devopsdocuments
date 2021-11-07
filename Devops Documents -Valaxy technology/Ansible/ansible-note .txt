@@ -1,0 +1,247 @@
+What is Ansible?
+===================
+>>Ansible is an open source automation and orchestration tool for software provisioning, configuration management, and software deployment.
+>>Ansible can easily run and configure Unix-like systems as well as Windows systems to provide infrastructure as code.
+>>It contains its own declarative programming language for system configuration and management.
+
+Why use Ansible?
+===================
+Here are some important pros/benefits of using Ansible
+
+>>One of the most significant advantages of Ansible is that it is free to use by everyone.
+>>It does not need any special system administrator skills to install and use Ansible, and the official documentation is very comprehensive.
+>>Its modularity regarding plugins, modules, inventories, and playbooks make Ansible the perfect companion to orchestrate large environments.
+>>Ansible is very lightweight and consistent, and no constraints regarding the operating system or underlying hardware are present.
+>>It is also very secure due to its agentless capabilities and due to the use of OpenSSH security features.
+>>Another advantage that encourages the adoption of Ansible is its smooth learning curve determined by the comprehensive documentation and easy
+ to learn structure and configuration.
+
+History of Ansible
+=====================
+Here, are important land marks from the history of ansible:
+
+>>In February 2012 the Ansible project began. It was first developed by Michael DeHaan, the creator of Cobbler and Func, Fedora Unified Network Controller.
+>>Initially called AnsibleWorks Inc, the company funding the ansible tool was acquired in 2015 by RedHat and later on, along with RedHat, moved under the umbrella of IBM.
+>>In the present, Ansible comes included in distributions like Fedora Linux, RHEL, Centos and Oracle Linux.
+
+Important terms used in Ansible
+====================================
+Ansible server:
+The machine where Ansible is installed and from which all tasks and playbooks will be ran
+
+Module:
+Basically, a module is a command or set of similar Ansible commands meant to be executed on the client-side
+
+Task:
+A task is a section that consists of a single procedure to be completed
+
+Role:
+A way of organizing tasks and related files to be later called in a playbook
+
+Fact:
+Information fetched from the client system from the global variables with the gather-facts operation
+
+Inventory:
+File containing data about the ansible client servers. Defined in later examples as hosts file
+
+Play:
+Execution of a playbook
+
+Handler:
+Task which is called only if a notifier is present
+
+Notifier:
+Section attributed to a task which calls a handler if the output is changed
+
+Tag:
+Name set to a task which can be used later on to issue just that specific task or group of tasks.
+
+Ansible Installation in Linux
+===================================
+Once you have compared and weighed your options and decided to go for Ansible, the next step is to have it installed on your system. 
+We will go through the steps of installation in different Linux distributions, the most popular ones, in the next small tutorial.
+
+Install Ansible on Centos/RedHat systems
+------------------------------------------
+Step 1) Install EPEL repo
+[root@ansible-server ~]# sudo yum install epel-release
+Step 2) Install ansible package
+[root@ansible-server ~]# sudo  yum install -y ansible
+
+Install ansible on Ubuntu/Debian systems
+-------------------------------------------
+Step 1) Perform an update to the packages
+$ sudo apt update
+Step 2) Install the software-properties-common package
+$ sudo apt install software-properties-common
+Step 3) Install ansible personal package archive
+$ sudo apt-add-repository ppa:ansible/ansible
+Step 4) Install ansible
+$ sudo apt update
+$ sudo apt install ansible
+
+Ansible ad-hoc commands
+==========================================
+One of the simplest ways Ansible can be used is by using ad-hoc commands. These can be used when you want to issue some commands on a server or a bunch of servers.
+Ad-hoc commands are not stored for future uses but represent a fast way to interact with the desired servers.
+
+For this Ansible tutorial, a simple two servers hosts file will be configured, containing host1 and host2.
+
+You can make sure that the hosts are accessible from the ansible server by issuing a ping command on all hosts.
+
+[root@ansible-server test_ansible]# ansible -i hosts all -m ping
+host1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+host2 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+Explanation:
+Status of the command, in this case, SUCCESS
+Host on which the command ran
+The command issued via the -m parameter, in this case, ping
+With the -i parameter, you can point to the hosts file.
+
+You can issue the same command only on a specific host if needed.
+----------------------------------------------------------------------
+[root@ansible-server test_ansible]# ansible -i hosts all -m ping --limit host2
+host2 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+Explanation:
+Limit parameter can be used to issue commands only on specific hosts in the host’s file
+Name of the host as defined in the inventory file
+
+
+If you need to copy a file to multiple destinations rapidly, you can use the copy module in ansible which uses SCP. So the command and its output look like below:
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+[root@ansible-server test_ansible]# ansible -i hosts all -m copy -a "src=/root/test_ansible/testfile dest=/tmp/testfile"
+host1 | SUCCESS => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/testfile",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/root/.ansible/tmp/ansible-tmp-1562216392.43-256741011164877/source",
+    "state": "file",
+    "uid": 0
+}
+host2 | SUCCESS => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/testfile",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/root/.ansible/tmp/ansible-tmp-1562216392.6-280302911361278/source",
+    "state": "file",
+    "uid": 0
+}
+Explanation:
+
+Copy module defined
+Module arguments, in this case, are source absolute path and destination absolute path.
+Ansible command output reflecting the success of the copy command and other details like the sha1 or md5 checksums for file integrity check and metadata like owner,
+size,or permissions.It is effortless to have a package installed on a bunch of servers.Ansible has several modules that interact with used installers,like yum,apt,dnf,etc.
+
+In the next example, you will find out how to install a package via the yum module on two Centos hosts.
+-------------------------------------------------------------------------------------------------------------
+[root@ansible-server test_ansible]# ansible -i hosts all -m yum -a 'name=ncdu state=present'
+host1 | SUCCESS => {
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+
+
+"Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirror.netsite.dk\n * elrepo: mirrors.xservers.ro\n * epel: fedora.mirrors.telekom.ro\n * extras: centos.mirrors.telekom.ro\n * remi-php70: remi.schlundtech.de\n * remi-safe: remi.schlundtech.de\n * updates: centos.mirror.iphh.net\nResolving Dependencies\n--> Running transaction check\n---> Package ncdu.x86_64 0:1.14-1.el7 will be installed\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package         Arch              Version                Repository       Size\n================================================================================\nInstalling:\n ncdu            x86_64            1.14-1.el7             epel             51 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\n\nTotal download size: 51 k\nInstalled size: 87 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : ncdu-1.14-1.el7.x86_64                                       1/1 \n  Verifying  : ncdu-1.14-1.el7.x86_64                                       1/1 \n\nInstalled:\n  ncdu.x86_64 0:1.14-1.el7                                                      \n\nComplete!\n"
+    ]
+}
+host2 | SUCCESS => {
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirror.netsite.dk\n * elrepo: mirrors.leadhosts.com\n * epel: mirrors.nav.ro\n * extras: centos.mirrors.telekom.ro\n * remi-php70: mirrors.uni-ruse.bg\n * remi-safe: mirrors.uni-ruse.bg\n * updates: centos.mirror.iphh.net\nResolving Dependencies\n--> Running transaction check\n---> Package ncdu.x86_64 0:1.14-1.el7 will be installed\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package         Arch              Version                Repository       Size\n================================================================================\nInstalling:\n ncdu            x86_64            1.14-1.el7             epel             51 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\n\nTotal download size: 51 k\nInstalled size: 87 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : ncdu-1.14-1.el7.x86_64                                       1/1 \n  Verifying  : ncdu-1.14-1.el7.x86_64                                       1/1 \n\nInstalled:\n  ncdu.x86_64 0:1.14-1.el7                                                      \n\nComplete!\n"
+    ]
+}
+Explanation:
+
+Yum module is used in this example
+It defines the module arguments, and in this case, you will choose the name of the package and its state. If the state is absent, for example, the package will be searched and if found, removed
+When colored in yellow, you will see the output of the ansible command with the state changed, meaning in this case, that the package was found and installed.
+Status of the yum install command issued via ansible. In this case the package ncdu.x86_64 0:1.14-1.el7 was installed.
+Of course, all of the yum installer options can be used via ansible, including update, install, latest version, or remove.
+
+In the below example the same command was issued to remove the previously installed ncdu package.
+-----------------------------------------------------------------------------------------------------
+[root@ansible-server test_ansible]# ansible -i hosts all -m yum -a 'name=ncdu state=absent'
+
+
+Ansible Playbooks
+================================================
+Ansible Playbooks are the way of sending commands to remote systems through scripts. 
+Ansible playbooks are used to configure complex system environments to increase flexibility by executing a script to one or more systems. 
+Ansible playbooks tend to be more of a configuration language than a programming language.
+Ansible playbook commands use YAML format, so there is not much syntax needed, but indentation must be respected.
+Like the name is saying, a playbook is a collection of plays. Through a playbook, you can designate specific roles to some hosts and other roles to other hosts.
+By doing so, you can orchestrate multiple servers in very diverse scenarios, all in one playbook.
+To have all the details precise before continuing with Ansible playbook examples, we must first define a task. 
+These are the interface to ansible modules for roles and playbooks.
+
+Now, let’s learn Ansible playbook through an example with one playbook with one play, containing multiple tasks as below:
+------------------------------------------------------------------------------------------------------------------------------
+---
+
+- hosts: group1
+  tasks:
+  - name: Install lldpad package
+    yum:
+      name: lldpad
+      state: latest
+  - name: check lldpad service status
+    service:
+      name: lldpad
+      state: started
+
+Explanation:
+
+Group of hosts on which the playbook will run
+Yum module is used in this task for lldpad installation
+The service module is used to check if the service is up and running after installation
+
+Each ansible playbook works with an inventory file. The inventory file contains a list of servers divided into groups for better control for details like IP Address and SSH port for each host.
+
+The inventory file you can use for this Ansible playbook example looks like below. There are two groups, named group1 and group2 each containing host1 and host2 respectively.
+
+[group1]
+host1 ansible_host=192.168.100.2 ansible_ssh_port=22
+[group2]
+host2 ansible_host=192.168.100.3 ansible_ssh_port=22
+
+Explanation:
+
+Group name
+Hostname, with IP address and ssh port, in this case, the default one, 22.
+
+
+
+
+
+
+
+
+
+
+
+

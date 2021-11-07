@@ -1,0 +1,99 @@
+ LInux scrpting 
+ ====================
+https://linuxhint.com/30_bash_script_examples/
+
+no-1 : hello world print script 
+=====
+#!/bin/bash
+echo "hello world"
+
+No-2 : Two number add shell scripting 
+=========
+#!/bin/bash
+((sum=34+67))
+echo $sum
+
+No-3 : use while loop
+=======
+In the example, while loop will iterate for 5 times. The value of count variable will increment by 1 in each step.
+When the value of count variable will 5 then the while loop will terminate.
+
+#!/bin/bash
+valid=true
+count=1
+while [ $valid ]
+do
+echo $count
+if [ $count -eq 5 ];
+then
+break
+fi
+((count++))
+done
+
+No-4 :  multiline 
+========
+#!/bin/bash
+: '
+The following script calculates
+the square value of the number, 5.
+'
+((area=5*5))
+echo $area
+
+No-5: using for loop 
+========
+Here, for loop will iterate for 10 times and print all values of the variable, counter in single line.
+
+#!/bin/bash
+for (( counter=10; counter>0; counter-- ))
+do
+echo -n "$counter "
+done
+printf "\n"
+
+
+NO-6 :Get User Input:
+========
+one string value will be taken from the user and display the value by combining other string value
+
+#!/bin/bash
+echo "Enter Your Name"
+read name
+echo "Welcome $name to LinuxHint"
+
+No-7 :Using if statement:
+=======
+Here, 10 is assigned to the variable, n. 
+if the value of $n is less than 10 then the output will be “It is a one digit number”, otherwise the output will be “It is a two digit number”. 
+For comparison, ‘-lt’ is used here.For comparison, you can also use ‘-eq’ for equality, ‘-ne’ for not equality and ‘-gt’ for greater than in bash script.
+
+#!/bin/bash
+n=10
+if [ $n -lt 10 ];
+then
+echo "It is a one digit number"
+else
+echo "It is a two digit number"
+fi
+
+#!/bin/bash
+echo "Enter your n "
+rean n
+if [ $n -lt 10 ];
+then
+echo "It is a one digit number"
+echo "It is a two digit number"
+fi
+
+No-8:
+=====
+
+
+
+
+
+
+
+
+

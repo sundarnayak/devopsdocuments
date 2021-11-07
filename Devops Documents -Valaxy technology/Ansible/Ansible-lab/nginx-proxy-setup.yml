@@ -1,0 +1,12 @@
+###nginx-proxy-setup.yml
+===============================
+
+---
+- hosts: nginx
+  become: true
+  tasks:
+    - name: installing nginx as reverse proxy
+      apt: name=nginx state=present update_cache=yes
+
+    - name: starting nginx service 
+      service: name=nginx state=started enabled=yes
